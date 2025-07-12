@@ -1,4 +1,4 @@
-from Heap import maxHeapInt, maxHeapTuple, minHeapInt, minHeapTuple
+from GraphGenerationCode.Heap import maxHeapInt, maxHeapTuple, minHeapInt, minHeapTuple
 
 def heapSelect(H1, k):
     if len(H1) > 0 and k > 0 and k <= len(H1):
