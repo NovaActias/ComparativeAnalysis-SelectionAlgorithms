@@ -1,8 +1,7 @@
-from HeapSelect import heapSelect
-from QuickSelect import quickSelect
-from partition3WayRandomized import quickSelectRandomized
-from MedianOfMediansSelect import medianOfMediansSelect
-from DisegnaGrafico import disegnaGrafico
+from GraphGenerationCode.HeapSelect import heapSelect
+from GraphGenerationCode.QuickSelect import quickSelect
+from GraphGenerationCode.partition3WayRandomized import quickSelectRandomized
+from GraphGenerationCode.MedianOfMediansSelect import medianOfMediansSelect
 
 import random
 import time
@@ -114,5 +113,3 @@ def benchmark():
 
 print("Benchmark partito")
 benchmark()
-#print("Benchmark terminato. Creo il grafico.")
-#disegnaGrafico()
