@@ -1,0 +1,31 @@
+_X
+Dimensione degli array
+_Y
+Tempo medio di esecuzione (s)
+_Linear
+Andamento Lineare
+
+_Title_HeapSelect
+Prestazioni di Heap Select nel caso medio
+_Title_MediansOfMediansSelect
+Prestazioni Medians Of Medians nel caso medio
+_Title_Quick
+Prestazioni Quick Select nel caso medio
+_Title_WorstQuick
+Prestazioni Quick Select nel caso peggiore
+_Title_WorstQuickPartition3Way
+Prestazioni di QuickSelectRandomized con Partition3WayRandomized nel caso peggiore
+
+_Title_k=10x
+Prestazione algoritmi di selezione con k variabile
+_X_k=10x
+Valori di k
+_Title_k=1
+Prestazione algoritmi di selezione con k=1
+_Title_k=lenArray
+Prestazione algoritmi di selezione con k=len(Array)
+_Title_k=lenArray//2
+Prestazione algoritmi di selezione con k=len(Array)//2
+
+_Title_End_Graph
+Confronto delle prestazioni degli algoritmi di selezione

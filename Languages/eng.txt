@@ -1,0 +1,31 @@
+_X
+Array size
+_Y
+Average execution time (seconds)
+_Linear
+Linear trend
+
+_Title_HeapSelect
+Average-case performance of HeapSelect
+_Title_MediansOfMediansSelect
+Average-case performance of Medians Of Medians
+_Title_Quick
+Average-case performance of Quick Select
+_Title_WorstQuick
+Worst-case performance of QuickSelect
+_Title_WorstQuickPartition3Way
+Worst-case performance of QuickSelectRandomized using Partition3WayRandomized
+
+_Title_k=10x
+Performance of selection algorithms with variable k
+_X_k=10x
+Values of k
+_Title_k=1
+Performance of selection algorithms with k=1
+_Title_k=lenArray
+Performance of selection algorithms with k=len(Array)
+_Title_k=lenArray//2
+Performance of selection algorithms with k=len(Array)//2
+
+_Title_End_Graph
+Comparative performance of selection algorithms
