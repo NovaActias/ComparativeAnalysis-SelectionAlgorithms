@@ -46,6 +46,12 @@ INFO = {
         'dotColor': 'orange',
         'lineColor': 'darkorange',
         'execTimesPath': os.path.join(execTimeDirPath, 'QuickSelect.txt')
+    },
+    GraphType.WorstQuickP3W: {
+        'name': 'Quick Select',
+        'dotColor': 'red',
+        'lineColor': 'red',
+        'execTimesPath': os.path.join(execTimeDirPath, 'QuickSelectP3W.txt')
     }
 }
 
@@ -53,7 +59,9 @@ def isSingleGraph(graphEnum: GraphType):
     if graphEnum in {
     GraphType.Heap,
     GraphType.Medians,
-    GraphType.Quick}: 
+    GraphType.Quick,
+    GraphType.WorstQuickP3W
+    }: 
         return True
     return False
 
