@@ -213,7 +213,7 @@ DrawGraph(GraphType.Medians, True)
 DrawGraph(GraphType.Medians, False)
 DrawGraph(GraphType.Heap, True)
 DrawGraph(GraphType.Heap, False)'''
-DrawGraph(GraphType.WithK10x, False)
+#DrawGraph(GraphType.WithK10x, False)
 '''
 DrawGraph(GraphType.WithK1, True)
 DrawGraph(GraphType.WithK1, False)
