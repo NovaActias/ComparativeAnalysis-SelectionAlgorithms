@@ -26,6 +26,5 @@ _Title_k=lenArray
 Performance of selection algorithms with k=len(Array)
 _Title_k=lenArray//2
 Performance of selection algorithms with k=len(Array)//2
-
-_Title_End_Graph
+_Title_k=random
 Comparative performance of selection algorithms

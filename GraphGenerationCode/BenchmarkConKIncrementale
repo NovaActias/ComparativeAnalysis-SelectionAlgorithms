@@ -61,10 +61,8 @@ nomi_algoritmiDiSelezione = ["QuickSelect", "QuickSelectRandomizedPTW", "HeapSel
 tempiMedi = [[] for _ in algoritmiDiSelezione]     #lista di tante liste quanti sono gli algoritmi di selezione 
 dimensioneArrayGenerati = []
 
-
 dimArray = 1000
 kArray = list(range(0, 1001, 10))
-
 
 
 def benchmark():
