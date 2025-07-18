@@ -117,6 +117,46 @@ def getYTag() -> str:
             return righe[i + 1] 
     return f"_Y not found"
 
+def calculate_k_averages(file_path):
+    """
+    Calcola le medie dei tempi di esecuzione per ogni valore di k.
+    
+    Args:
+        file_path (str): Percorso del file kIs10x.txt
+        
+    Returns:
+        list: Array con le medie per ogni valore di k
+    """
+    # Leggi tutti i valori dal file
+    with open(file_path, 'r') as file:
+        values = [float(line.strip()) for line in file]
+    
+    # Numero di valori di k (da 0 a 1000, step 10)
+    num_k_values = 101
+    num_executions = 5
+    
+    averages = []
+    
+    for i in range(num_k_values):
+        # Per ogni k, prendi i 5 valori dalle diverse esecuzioni
+        k_values = []
+        for execution in range(num_executions):
+            index = i + (execution * num_k_values)
+            k_values.append(values[index])
+        
+        # Calcola la media mantenendo la stessa precisione dei dati originali
+        avg = sum(k_values) / len(k_values)
+        
+        # Mantieni lo stesso numero di cifre decimali del primo valore
+        first_value_str = str(k_values[0])
+        if '.' in first_value_str:
+            decimal_places = len(first_value_str.split('.')[1])
+            avg = round(avg, decimal_places)
+        
+        averages.append(avg)
+    
+    return averages
+
 #--------------------------------------Plotting Functions--------------------------------------#
 def addPlottedGraph(graph: GraphType, kType, ax):
     #Get the correct exec times based on kType
@@ -140,10 +180,11 @@ def addPlottedGraph(graph: GraphType, kType, ax):
     #Line connecting the dots
     ax.plot(xValues, yValues, '-', color=algorithm['lineColor'], zorder=lineZ)
     
-    #Linear trend graph
-    #k = yValues[0] / xValues[0]
-    #linearTrend = [(k * x) for x in xValues]
-    #ax.plot(xValues, linearTrend, '--', color=algorithm['lineColor'], label = getLinear(), zorder=2)
+    if kType!='kIs10x':
+        #Linear trend graph
+        k = yValues[0] / xValues[0]
+        linearTrend = [(k * x) for x in xValues]
+        ax.plot(xValues, linearTrend, '--', color=algorithm['lineColor'], label = getLinear(), zorder=2)
 
 def DrawGraph(graphEnum: GraphType, isLog: bool):
     #Matplotlib config for the title
@@ -174,8 +215,8 @@ def DrawGraph(graphEnum: GraphType, isLog: bool):
         addPlottedGraph(GraphType.Quick, 'kIsLenArrayDiv2', ax)
     elif graphEnum==(GraphType.WithK10x):
         addPlottedGraph(GraphType.Heap, 'kIs10x', ax)
-        #addPlottedGraph(GraphType.Medians,'kIs10x_5values', ax)
-        #addPlottedGraph(GraphType.Quick, 'kIs10x_5values', ax)
+        addPlottedGraph(GraphType.Medians,'kIs10x', ax)
+        addPlottedGraph(GraphType.Quick, 'kIs10x', ax)
     
     if isLog:
         plt.xscale('log')
@@ -201,7 +242,6 @@ DrawGraph(GraphType.Medians, False)
 DrawGraph(GraphType.Heap, True)
 DrawGraph(GraphType.Heap, False)'''
 DrawGraph(GraphType.WithK10x, False)
-'''
 DrawGraph(GraphType.WithK1, True)
 DrawGraph(GraphType.WithK1, False)
 DrawGraph(GraphType.WithKLenArray, True)
@@ -215,5 +255,5 @@ DrawGraph(GraphType.WorstQuickP3W, False)
 DrawGraph(GraphType.FinalGraph, True)
 DrawGraph(GraphType.FinalGraph, False)
 DrawGraph(GraphType.FinalGraphWithP3W, True)
-DrawGraph(GraphType.FinalGraphWithP3W, False)'''
+DrawGraph(GraphType.FinalGraphWithP3W, False)
 
