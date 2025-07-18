@@ -124,7 +124,7 @@ def addPlottedGraph(graph: GraphType, kType, ax):
     ExecTimePathFile = os.path.join(algorithm['dataDir'], kType + '.txt')
 
     #Get the correct x values based on kType (the value of k for 'kIs10', the array size for the other ones)
-    if kType=='kIs10x_5values':
+    if kType=='kIs10x':
         xValues = readValues(valuesOfKFilePath)
         yValues = readValues(ExecTimePathFile)
     else:
@@ -141,9 +141,9 @@ def addPlottedGraph(graph: GraphType, kType, ax):
     ax.plot(xValues, yValues, '-', color=algorithm['lineColor'], zorder=lineZ)
     
     #Linear trend graph
-    k = yValues[0] / xValues[0]
-    linearTrend = [(k * x) for x in xValues]
-    ax.plot(xValues, linearTrend, '--', color=algorithm['lineColor'], label = getLinear(), zorder=2)
+    #k = yValues[0] / xValues[0]
+    #linearTrend = [(k * x) for x in xValues]
+    #ax.plot(xValues, linearTrend, '--', color=algorithm['lineColor'], label = getLinear(), zorder=2)
 
 def DrawGraph(graphEnum: GraphType, isLog: bool):
     #Matplotlib config for the title
@@ -173,9 +173,9 @@ def DrawGraph(graphEnum: GraphType, isLog: bool):
         addPlottedGraph(GraphType.Medians, 'kIsLenArrayDiv2', ax)
         addPlottedGraph(GraphType.Quick, 'kIsLenArrayDiv2', ax)
     elif graphEnum==(GraphType.WithK10x):
-        addPlottedGraph(GraphType.Heap, 'kIs10x_5values', ax)
-        addPlottedGraph(GraphType.Medians,'kIs10x_5values', ax)
-        addPlottedGraph(GraphType.Quick, 'kIs10x_5values', ax)
+        addPlottedGraph(GraphType.Heap, 'kIs10x', ax)
+        #addPlottedGraph(GraphType.Medians,'kIs10x_5values', ax)
+        #addPlottedGraph(GraphType.Quick, 'kIs10x_5values', ax)
     
     if isLog:
         plt.xscale('log')
