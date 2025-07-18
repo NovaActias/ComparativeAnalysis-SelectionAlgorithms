@@ -77,20 +77,6 @@ def readValues(filePath):
             newValue = float(line.strip())
             values.append(newValue)
     return values
-
-def readValues_kIs10x(filePath):
-    values = []
-    with open(filePath, 'r') as file:
-        for line in file:
-            values.append(float(line.strip()))
-    
-    averaged = []
-    for i in range(0, len(values), 5):
-        block = values[i:i + 5]
-        if len(block) == 5:
-            media = sum(block) / 5
-            averaged.append(media)
-    return averaged
     
 def getTitle(graphEnum: GraphType) -> str:
     key = graphEnum.value
@@ -140,14 +126,15 @@ def addPlottedGraph(graph: GraphType, kType, ax):
     #Get the correct x values based on kType (the value of k for 'kIs10', the array size for the other ones)
     if kType=='kIs10x_5values':
         xValues = readValues(valuesOfKFilePath)
-        yValues = readValues_kIs10x(ExecTimePathFile)
+        yValues = readValues(ExecTimePathFile)
     else:
         xValues = readValues(arraySizeFilePath)
         yValues = readValues(ExecTimePathFile)
 
+    #Debug prints:
     print(ExecTimePathFile)
     print(valuesOfKFilePath) 
-    print(len(xValues), len(yValues))
+    print(len(xValues), len(yValues)) #len(xValues)=101, len(yValues)=505
     #Dots 
     plt.scatter(xValues , yValues, color = algorithm['dotColor'], label = algorithm['name'], zorder=dotZ, s=dotSize)
     #Line connecting the dots
@@ -213,7 +200,7 @@ DrawGraph(GraphType.Medians, True)
 DrawGraph(GraphType.Medians, False)
 DrawGraph(GraphType.Heap, True)
 DrawGraph(GraphType.Heap, False)'''
-#DrawGraph(GraphType.WithK10x, False)
+DrawGraph(GraphType.WithK10x, False)
 '''
 DrawGraph(GraphType.WithK1, True)
 DrawGraph(GraphType.WithK1, False)
