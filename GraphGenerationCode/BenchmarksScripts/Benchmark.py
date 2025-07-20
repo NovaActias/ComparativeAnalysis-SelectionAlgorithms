@@ -99,7 +99,7 @@ def benchmark():
         os.makedirs(directoryPath)
 
     # Build file paths relative to this directory
-    arraySizes_path = os.path.join(directoryPath, 'arraySizes.txt')
+    arraySizes_path = os.path.join(directoryPath, 'ArraySizes.txt')
 
     # Write the size of each generated array to a file.
     with open(arraySizes_path, 'w') as f:
