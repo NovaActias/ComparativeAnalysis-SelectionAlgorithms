@@ -8,113 +8,111 @@ import time
 import os
 #################################### ! DISCLAIMER ! ###################################################################
 
-# IL SEGUENTE BENCHMARK NON È STATO PENSATO PER ESSERE ESEGUITO SU WINDOWS. 
-# È STATO TESTATO SU MACOSX E UBUNTU, PERTANTO SCONSIGLIAMO L'ESECUZIONE SU SISTEMI OPERATIVI DIFFERENTI.
-# IN PARTICOLARE I TEMPI DI ESECUZIONE DEL BENCHMARK, SU WINDOWS, POSSONO RISULTARE ESTREMEAMENTE PIÙ ELEVATI. 
-# INOLTRE IL GRAFICO NON VERRÀ GENERATO.
-
-
+# THE FOLLOWING BENCHMARK WAS NOT DESIGNED TO BE EXECUTED ON WINDOWS.
+# IT HAS BEEN TESTED ON MACOS AND UBUNTU, THEREFORE WE DO NOT RECOMMEND EXECUTION ON DIFFERENT OPERATING SYSTEMS.
+# IN PARTICULAR, THE BENCHMARK EXECUTION TIMES ON WINDOWS CAN BE EXTREMELY HIGHER.
+# ADDITIONALLY, THE GRAPH WILL NOT BE GENERATED.
 
 '''
-tempoMinimoMisurabile:
-    Restituisce il tempo minimo misurabile dal contatore time.monotonic().
+minimumMeasurableTime:
+    Returns the minimum measurable time from the time.monotonic() counter.
 '''
-def tempoMinimoMisurabile():
-    inizioMisurazione = time.monotonic()
-    while time.monotonic() == inizioMisurazione:
+def minimumMeasurableTime():
+    measurementStart = time.monotonic()
+    while time.monotonic() == measurementStart:
         pass
-    fineMisurazione = time.monotonic()
-    return fineMisurazione - inizioMisurazione
+    measurementEnd = time.monotonic()
+    return measurementEnd - measurementStart
 
 
 '''
-misuraTempi:
-    1) Misura in modo accurato il tempo di esecuzione di ciascun algoritmo nella lista algoritmiDiSelezione.
-    2) Garantisce un errore relativo inferiore all' 1%.
-    3) Aggiunge il tempo medio misurato al contatore del tempo medio di ogni algoritmo eseguito.
+measureTimes:
+    1) Accurately measures the execution time of each algorithm in the selectionAlgorithms list.
+    2) Guarantees a relative error lower than 1%.
+    3) Adds the measured average time to the average time counter of each executed algorithm.
 '''
-tMinMisurabile = tempoMinimoMisurabile() * (1 + (1 / 0.01))  # max_rel_error = 1% = 0.01
+minMeasurableTime = minimumMeasurableTime() * (1 + (1 / 0.01))  # max_rel_error = 1% = 0.01
 
-def misuraTempi(array, k, algoritmiDiSelezione, tempiMedi):
-    for i, func in enumerate(algoritmiDiSelezione):
+def measureTimes(array, k, selectionAlgorithms, averageTimes):
+    for i, func in enumerate(selectionAlgorithms):
         count = 0
-        tempoIniziale = time.monotonic()
-        while time.monotonic() - tempoIniziale < tMinMisurabile:
+        initialTime = time.monotonic()
+        while time.monotonic() - initialTime < minMeasurableTime:
             func(array.copy(), k)
             count += 1
-        durata = time.monotonic() - tempoIniziale
-        tempiMedi[i] += (durata / count)
+        duration = time.monotonic() - initialTime
+        averageTimes[i] += (duration / count)
 
 
 '''
 benchmark:
-    1) Misura il tempo medio di esecuzione di ciascun algoritmo nella lista algoritmiDiSelezione.
-    2) Genera passiSuccessione(100) array di dimensione crescente seguendo una serie geometrica. 
-        La dimensione degli array va da 100 a 100000.
-    3) Ad ogni passo vengono eseguiti testPerOgniN(500) test con k random per garantire che i tempi di esecuzione degli algoritmi siano medi.
-    4) In ogni test viene riempito l'array di dimensione prefissata, con valori casuali in un range [-1000,1000].
-    5) In ogni test viene misurato il tempo di esecuzione.
-    6) Alla fine dei test viene salvata la media dei tempi per quel passo della successione in una lista di liste tempiMedi.
-    7) Ad ogni passo, dopo aver eseguito i testPerOgniN(500), viene salvata la dimensione dell'array su cui è stato eseguito quel passo.
-    8) Alla fine dei 100 passi, vengono salvati i dati dei tempi medi in dei file separati. Uno per ogni algoritmo. 
-    9) Infine, viene richiamata la funzione che disegna il grafico prendendo i dati dai file generati.
+    1) Measures the average execution time of each algorithm in the selectionAlgorithms list.
+    2) Generates sequenceSteps(100) arrays of increasing size following a geometric series.
+        The array size ranges from 100 to 100000.
+    3) At each step, testsPerN(500) tests are executed with random k to ensure that algorithm execution times are average.
+    4) In each test, the array of predetermined size is filled with random values in a range [-1000,1000].
+    5) In each test, the execution time is measured.
+    6) At the end of the tests, the average times for that sequence step are saved in a list of lists averageTimes.
+    7) At each step, after executing testsPerN(500), the size of the array on which that step was executed is saved.
+    8) At the end of 100 steps, the average time data is saved in separate files. One for each algorithm.
+    9) Finally, the function that draws the graph is called, taking data from the generated files.
 '''
-# Lista degli algoritmi di selezione
-algoritmiDiSelezione = [quickSelect, quickSelectRandomized, heapSelect, medianOfMediansSelect]
-nomi_algoritmiDiSelezione = ["QuickSelect", "QuickSelectRandomizedPTW", "HeapSelect", "MedianOfMediansSelect"]
+# List of selection algorithms
+selectionAlgorithms = [quickSelect, quickSelectRandomized, heapSelect, medianOfMediansSelect]
+selectionAlgorithmNames = ["QuickSelect", "QuickSelectRandomizedPTW", "HeapSelect", "MedianOfMediansSelect"]
 
 
-# Inizializza le liste per i tempi medi
-tempiMedi = [[] for _ in algoritmiDiSelezione]     #lista di tante liste quanti sono gli algoritmi di selezione 
-dimensioneArrayGenerati = []
+# Initialize lists for average times
+averageTimes = [[] for _ in selectionAlgorithms]     # list of as many lists as there are selection algorithms
+generatedArraySizes = []
 
 def benchmark():
-    A = 100  # Inizio della serie geometrica
-    B = (100000 / 100) ** (1 / 99)  # Calcolo di B per ottenere n finale di 100000 (radice 99-esima)
-    passiSuccessione = 100
-    testPerOgniN = 500
+    A = 100  # Start of geometric series
+    B = (100000 / 100) ** (1 / 99)  # Calculation of B to obtain final n of 100000 (99th root)
+    sequenceSteps = 100
+    testsPerN = 500
 
 
-    for i in range(passiSuccessione):
-        dimArray = int(A * (B ** i))
-        print("Eseguo il passo {} / {} della successione \t len(A) : {}".format(i+1, passiSuccessione, dimArray))
+    for i in range(sequenceSteps):
+        arraySize = int(A * (B ** i))
+        print("Executing step {} / {} of sequence \t len(A) : {}".format(i+1, sequenceSteps, arraySize))
         
-        # Inizializza i tempi medi per questa dimensione dell'array
-        tempiMediPasso = [0] * len(algoritmiDiSelezione)
+        # Initialize average times for this array size
+        stepAverageTimes = [0] * len(selectionAlgorithms)
     
-        for _ in range(testPerOgniN):
-            array = [random.randint(-1000, 1000) for _ in range(dimArray)]
-            k = random.randint(1, dimArray)
-            misuraTempi(array, k, algoritmiDiSelezione, tempiMediPasso)
+        for _ in range(testsPerN):
+            array = [random.randint(-1000, 1000) for _ in range(arraySize)]
+            k = random.randint(1, arraySize)
+            measureTimes(array, k, selectionAlgorithms, stepAverageTimes)
             
-        for j in range(len(algoritmiDiSelezione)):
-            tempiMedi[j].append(tempiMediPasso[j] / testPerOgniN)
+        for j in range(len(selectionAlgorithms)):
+            averageTimes[j].append(stepAverageTimes[j] / testsPerN)
 
-        dimensioneArrayGenerati.append(dimArray)
+        generatedArraySizes.append(arraySize)
 
 
-    # Imposta la directory di lavoro relativa alla posizione di questo file
-    directoryPath = os.path.join(os.path.dirname(__file__), 'RisultatiBenchmark')
+    # Set working directory relative to this file's position
+    directoryPath = os.path.join(os.path.dirname(__file__), 'BenchmarkResults')
 
-    # Verifica se la cartella esiste, altrimenti creala
+    # Check if folder exists, otherwise create it
     if not os.path.exists(directoryPath):
         os.makedirs(directoryPath)
 
-    # Costruisci i percorsi dei file relativi a questa directory
-    dimensioniArray_path = os.path.join(directoryPath, 'dimensioniArray.txt')
+    # Build file paths relative to this directory
+    arraySizes_path = os.path.join(directoryPath, 'arraySizes.txt')
 
-    # Scrive la dimensione di ogni array generato in un file. 
-    with open(dimensioniArray_path, 'w') as f:
-        for n in dimensioneArrayGenerati:
+    # Write the size of each generated array to a file.
+    with open(arraySizes_path, 'w') as f:
+        for n in generatedArraySizes:
             f.write(f"{n}\n")
 
-    # Scrive i risultati dei tempi di esecuzione in file di testo separati. Uno per ogni algoritmo. 
-    for i, nome in enumerate(nomi_algoritmiDiSelezione):
-        file_path = os.path.join(directoryPath, f'tempi{nome}.txt')
+    # Write execution time results to separate text files. One for each algorithm.
+    for i, name in enumerate(selectionAlgorithmNames):
+        file_path = os.path.join(directoryPath, f'times{name}.txt')
         with open(file_path, 'w') as f:
-            for tempo in tempiMedi[i]:
-                f.write(f"{tempo}\n")
+            for time_val in averageTimes[i]:
+                f.write(f"{time_val}\n")
 
-print("Benchmark partito")
+print("Benchmark started")
 benchmark()
-print("Benchmark terminato")
+print("Benchmark completed")
