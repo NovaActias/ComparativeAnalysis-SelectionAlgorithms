@@ -1,9 +1,9 @@
 '''
 partition:
-    Dato un array e un intervallo (p, q):
-    1) Posiziona l'elemento in posizione q in posizione centrale dell'array.
-    2) Mette a sinistra del pivot tutti gli elementi minori del pivot.
-    3) Mette a destra del pivot tutti gli elementi maggiori del pivot.
+    Given an array and an interval (p, q):
+    1) Places the element at position q in the central position of the array.
+    2) Places all elements smaller than the pivot to the left of the pivot.
+    3) Places all elements greater than the pivot to the right of the pivot.
 '''
 def partition(A, p, q):
     pivot = A[q]
@@ -18,8 +18,8 @@ def partition(A, p, q):
 
 '''
 swap:
-    Dato un array e due indici posizionali:
-    1) Scambia l'elemento in posizione i con quello in posizione j
+    Given an array and two positional indices:
+    1) Swaps the element at position i with the one at position j
 '''
 def swap(A, i, j):
     t = A[i]
@@ -28,9 +28,9 @@ def swap(A, i, j):
 
 '''
 insertionSort:
-    Dato un array e un intervallo (start, end):
-    1) Ordina la sezione di array delimitata dall'intervallo.
-    2) Non ritorna l'array. Opera sull'array passato come parametro.
+    Given an array and an interval (start, end):
+    1) Sorts the array section delimited by the interval.
+    2) Does not return the array. Operates on the array passed as parameter.
 '''
 def insertionSort(A, start, end):
     for i in range(start, end+1):
@@ -41,12 +41,12 @@ def insertionSort(A, start, end):
 
 '''
 recMedianOfMediansSelect:
-    Dato un array, un intervallo e un indice posizionale k:
-    1) Divide l'array in blocchi da 5 elementi (fatta eccezione per l'ultimo che può averne meno) e li ordina con InsertionSort.
-    2) Sposta il mediano di ogni blocco in testa all'array.
-    3) Richiama ricorsivamente sé stessa nella porzione di testa dell'array, contenete i mediani. 
-    5) Sposta il mediano dei mediani in fondo all'array quando arriva a considerare un sub-array di testa di $5$ elementi (caso base).
-    6) Chiama Partition e richiama ricorsivamente RecMedianOfMedians sulla metà di array che contiene l'elemento cercato fino a quando il mediano dei mediani non è il $k-esimo$ elemento cercato.
+    Given an array, an interval and a positional index k:
+    1) Divides the array into blocks of 5 elements (except for the last one which may have fewer) and sorts them with InsertionSort.
+    2) Moves the median of each block to the head of the array.
+    3) Recursively calls itself on the head portion of the array, containing the medians. 
+    5) Moves the median of medians to the end of the array when it reaches considering a head sub-array of 5 elements (base case).
+    6) Calls Partition and recursively calls RecMedianOfMedians on the half of the array that contains the sought element until the median of medians is the k-th element sought.
 '''
 def recMedianOfMediansSelect(A, start, end, k):
     if k<0 or k>len(A):
@@ -55,16 +55,16 @@ def recMedianOfMediansSelect(A, start, end, k):
         insertionSort(A, start, end)
         return(A[k-1])
     else:
-        posMediano=start
+        medianPos=start
         for x in range(start+4, end, 5):
             insertionSort(A, x-4, x)
-            swap(A, posMediano, x-2)
-            posMediano+=1
+            swap(A, medianPos, x-2)
+            medianPos+=1
             if end-x<=5:
                 insertionSort(A, x+1, end)
-                swap(A, posMediano, (end+x)//2)
-        recMedianOfMediansSelect(A, start, posMediano, (posMediano+start+1)//2) 
-        swap(A, end, (posMediano+start+1)//2) 
+                swap(A, medianPos, (end+x)//2)
+        recMedianOfMediansSelect(A, start, medianPos, (medianPos+start+1)//2) 
+        swap(A, end, (medianPos+start+1)//2) 
 
     pivotPos = partition(A, start, end)
     if pivotPos == k-1:
@@ -77,7 +77,7 @@ def recMedianOfMediansSelect(A, start, end, k):
 
 '''
 medianOfMediansSelect:
-    funzione di appoggio utilizzata solo per l'inizializzazione dei paramentri per iniziare l'albero delle ricorsioni
+    support function used only for parameter initialization to start the recursion tree
 '''
 def medianOfMediansSelect(A, k):
     start = 0
@@ -85,7 +85,7 @@ def medianOfMediansSelect(A, k):
     return recMedianOfMediansSelect(A, start, end, k)
 
 '''
-Il seguente codice permette di leggere i dati passati in input dal server
+The following code allows reading data passed as input from the server
 '''
 A = [int(x) for x in input().split(" ") if x]
 k = int(input())

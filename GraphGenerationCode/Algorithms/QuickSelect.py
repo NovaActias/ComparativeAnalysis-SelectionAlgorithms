@@ -1,53 +1,53 @@
 '''
 quickSelect:
-    Dato un array e un indice k:
-    1) Restituisce il k-esimo elemento più piccolo presente nell'array.
-    2) Restituisce None se k non è un valore accettabile
+    Given an array and an index k:
+    1) Returns the k-th smallest element present in the array.
+    2) Returns None if k is not an acceptable value
 '''
 def quickSelect(A,k):
-    #Validazione dell'indice k
+    # Validation of index k
     if k<1 or k>len(A):
-        return None  #Se k non e' accettabile stampa None
+        return None  # If k is not acceptable, return None
     else:
 
-        #Inizializzazione delle variabili
+        # Variable initialization
         start = 0
         end = len(A) - 1
         k -= 1
 
-        #Ricerca del k-esimo elemento
+        # Search for the k-th element
         while start < end:
             pivotPos = partition(A, start, end)
-            if k >= start and k <= pivotPos-1: #se devo cercare prima del pivot 
+            if k >= start and k <= pivotPos-1: # if I need to search before the pivot 
                 end = pivotPos - 1
-            elif k >= pivotPos+1 and k <= end: #se devo cercare dopo
+            elif k >= pivotPos+1 and k <= end: # if I need to search after
                 start = pivotPos + 1
-            else: # se p = k-1
+            else: # if p = k-1
                 break
 
-        #Restituzione del risultato
+        # Return the result
         return A[k]
 
 '''
 partition:
-    Dato un array e un intervallo (p, q):
-    1) Sposta a sinistra del pivot tutti gli elementi minori del pivot.
-    2) Sposta a destra del pivot tutti gli elementi maggiori del pivot.
-    3) Restituisce la posizione del pivot.
+    Given an array and an interval (p, q):
+    1) Moves all elements smaller than the pivot to the left of the pivot.
+    2) Moves all elements greater than the pivot to the right of the pivot.
+    3) Returns the position of the pivot.
 '''
 def partition(A,p,q):
-    valorePivot=A[q]
+    pivotValue=A[q]
     i=p-1
     for j in range(p,q+1):
-        if A[j]<=valorePivot:
+        if A[j]<=pivotValue:
             i+=1
             swap(A,i,j)
     return i
 
 '''
 swap:
-    Dato un array e due indici posizionali:
-    1) Scambia l'elemento in posizione i con quello in posizione j
+    Given an array and two positional indices:
+    1) Swaps the element at position i with the one at position j
 '''
 def swap(A,i,j):
     temp=A[i]
