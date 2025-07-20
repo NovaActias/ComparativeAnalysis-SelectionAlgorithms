@@ -7,14 +7,14 @@ Linear trend
 
 _Title_HeapSelect
 Average-case performance of HeapSelect
-_Title_MediansOfMediansSelect
-Average-case performance of Medians Of Medians
+_Title_MedianOfMediansSelect
+Average-case performance of Median Of Medians
 _Title_Quick
 Average-case performance of Quick Select
 _Title_WorstQuick
 Worst-case performance of QuickSelect
 _Title_WorstQuickPartition3Way
-Worst-case performance of QuickSelectRandomized using Partition3WayRandomized
+Worst-case performance of QuickSelect using Partition3WayRandomized
 
 _Title_k=10x
 Performance of selection algorithms with variable k
@@ -27,4 +27,6 @@ Performance of selection algorithms with k=len(Array)
 _Title_k=lenArray//2
 Performance of selection algorithms with k=len(Array)//2
 _Title_k=random
+Comparative performance of selection algorithms
+_Title_k=random_withP3W
 Comparative performance of selection algorithms

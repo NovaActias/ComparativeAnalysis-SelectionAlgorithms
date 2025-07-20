@@ -15,7 +15,7 @@ lang_DirPath = os.path.join(os.path.dirname(__file__), 'Languages')           # 
 # File path configuration
 arraySizeFilePath = os.path.join(data_DirPath, 'ArraySize.txt')    # File containing array sizes for x-axis
 valuesOfKFilePath = os.path.join(data_DirPath, 'kValues.txt')      # File containing k values (0 to 1000, step 10)
-langFilePath = os.path.join(lang_DirPath, 'ita.txt')               # Language file for Italian labels
+langFilePath = os.path.join(lang_DirPath, 'eng.txt')               # Language file for labels
 
 # ====================================== Enum & Dictionary ======================================
 # Enumeration defining different types of graphs that can be generated
@@ -35,7 +35,7 @@ class GraphType(Enum):
     
     # Final comparison graphs
     FinalGraph = '_Title_k=random'                         # Final comparison with random k values
-    FinalGraphWithP3W = '_Title_k=random'                  # Final comparison including 3-way partitioning
+    FinalGraphWithP3W = '_Title_k=random_withP3W'                  # Final comparison including 3-way partitioning
 
 # Dictionary containing styling and data information for each algorithm
 INFO = {
@@ -51,6 +51,12 @@ INFO = {
         'lineColor': 'blueviolet',
         'dataDir': os.path.join(data_DirPath, 'MediansSelectExecTimes')
     },
+    GraphType.WorstQuick: {
+        'name': 'Quick Select',
+        'dotColor': 'orange',
+        'lineColor': 'darkorange',
+        'dataDir': os.path.join(data_DirPath, 'QuickSelectExecTimes')
+    },
     GraphType.Quick: {
         'name': 'Quick Select',
         'dotColor': 'orange',
@@ -58,7 +64,7 @@ INFO = {
         'dataDir': os.path.join(data_DirPath, 'QuickSelectExecTimes')
     },
     GraphType.WorstQuickP3W: {
-        'name': 'Quick Select',
+        'name': 'Quick Select P3W',
         'dotColor': 'red',
         'lineColor': 'red',
         'dataDir': os.path.join(data_DirPath, 'WorstQuickP3WExecTimes')
@@ -204,11 +210,6 @@ def addPlottedGraph(graph: GraphType, kType, ax):
         # For other tests, X-axis represents array sizes
         xValues = readValues(arraySizeFilePath)
         yValues = readValues(ExecTimePathFile)
-
-    # Debug information for troubleshooting
-    print(ExecTimePathFile)
-    print(valuesOfKFilePath) 
-    print(len(xValues), len(yValues))  # Should be: len(xValues)=101, len(yValues)=101 (after averaging)
     
     # Create scatter plot points
     plt.scatter(xValues, yValues, color=algorithm['dotColor'], label=algorithm['name'], zorder=dotZ, s=dotSize)
@@ -240,7 +241,10 @@ def DrawGraph(graphEnum: GraphType, isLog: bool):
     # Determine which algorithms to plot based on graph type
     if isWhithRandomK(graphEnum):
         # Single algorithm with random k values
-        addPlottedGraph(graphEnum, 'kIsRandom', ax)
+        if graphEnum == GraphType.WorstQuick:
+            addPlottedGraph(graphEnum, 'kIsRandom_Worst', ax)
+        else:
+            addPlottedGraph(graphEnum, 'kIsRandom', ax)
     elif graphEnum == (GraphType.FinalGraph or GraphType.FinalGraphWithP3W):
         # Comparison of all algorithms
         addPlottedGraph(GraphType.Heap, 'kIsRandom', ax)
@@ -286,7 +290,7 @@ def DrawGraph(graphEnum: GraphType, isLog: bool):
 # ================================================================================================
 # Main execution: Generate all graphs used in the report
 # ================================================================================================
-
+'''
 # Individual algorithm performance graphs (both linear and logarithmic scales)
 DrawGraph(GraphType.Quick, True)           # Quick Select - logarithmic scale
 DrawGraph(GraphType.Quick, False)          # Quick Select - linear scale
@@ -303,6 +307,7 @@ DrawGraph(GraphType.WithK1, True)          # k=1 comparison - logarithmic scale
 DrawGraph(GraphType.WithK1, False)         # k=1 comparison - linear scale
 DrawGraph(GraphType.WithKLenArray, True)   # k=array_length comparison - logarithmic scale
 DrawGraph(GraphType.WithKLenArray, False)  # k=array_length comparison - linear scale
+
 DrawGraph(GraphType.WithKLenArrayDiv2, True)   # k=array_length/2 comparison - logarithmic scale
 DrawGraph(GraphType.WithKLenArrayDiv2, False)  # k=array_length/2 comparison - linear scale
 
@@ -315,5 +320,6 @@ DrawGraph(GraphType.WorstQuickP3W, False)  # Worst-case Quick Select 3-way - lin
 # Final comparison graphs
 DrawGraph(GraphType.FinalGraph, True)      # Final comparison - logarithmic scale
 DrawGraph(GraphType.FinalGraph, False)     # Final comparison - linear scale
+'''
 DrawGraph(GraphType.FinalGraphWithP3W, True)   # Final comparison with 3-way - logarithmic scale
-DrawGraph(GraphType.FinalGraphWithP3W, False)  # Final comparison with 3-way - linear scale
+DrawGraph(GraphType.FinalGraphWithP3W, False)  # Final comparison with 3-way - linear scale 
