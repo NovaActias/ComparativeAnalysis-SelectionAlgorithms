@@ -245,7 +245,7 @@ def DrawGraph(graphEnum: GraphType, isLog: bool):
             addPlottedGraph(graphEnum, 'kIsRandom_Worst', ax)
         else:
             addPlottedGraph(graphEnum, 'kIsRandom', ax)
-    elif graphEnum == (GraphType.FinalGraph or GraphType.FinalGraphWithP3W):
+    elif graphEnum in (GraphType.FinalGraph, GraphType.FinalGraphWithP3W):
         # Comparison of all algorithms
         addPlottedGraph(GraphType.Heap, 'kIsRandom', ax)
         addPlottedGraph(GraphType.Medians, 'kIsRandom', ax)
@@ -290,7 +290,7 @@ def DrawGraph(graphEnum: GraphType, isLog: bool):
 # ================================================================================================
 # Main execution: Generate all graphs used in the report
 # ================================================================================================
-'''
+
 # Individual algorithm performance graphs (both linear and logarithmic scales)
 DrawGraph(GraphType.Quick, True)           # Quick Select - logarithmic scale
 DrawGraph(GraphType.Quick, False)          # Quick Select - linear scale
@@ -307,7 +307,6 @@ DrawGraph(GraphType.WithK1, True)          # k=1 comparison - logarithmic scale
 DrawGraph(GraphType.WithK1, False)         # k=1 comparison - linear scale
 DrawGraph(GraphType.WithKLenArray, True)   # k=array_length comparison - logarithmic scale
 DrawGraph(GraphType.WithKLenArray, False)  # k=array_length comparison - linear scale
-
 DrawGraph(GraphType.WithKLenArrayDiv2, True)   # k=array_length/2 comparison - logarithmic scale
 DrawGraph(GraphType.WithKLenArrayDiv2, False)  # k=array_length/2 comparison - linear scale
 
@@ -320,6 +319,5 @@ DrawGraph(GraphType.WorstQuickP3W, False)  # Worst-case Quick Select 3-way - lin
 # Final comparison graphs
 DrawGraph(GraphType.FinalGraph, True)      # Final comparison - logarithmic scale
 DrawGraph(GraphType.FinalGraph, False)     # Final comparison - linear scale
-'''
 DrawGraph(GraphType.FinalGraphWithP3W, True)   # Final comparison with 3-way - logarithmic scale
 DrawGraph(GraphType.FinalGraphWithP3W, False)  # Final comparison with 3-way - linear scale 
