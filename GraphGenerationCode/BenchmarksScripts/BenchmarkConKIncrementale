@@ -1,13 +1,11 @@
-from HeapSelect import heapSelect
-from QuickSelect import quickSelect
-from partition3WayRandomized import quickSelectRandomized
-from MedianOfMediansSelect import medianOfMediansSelect
-from DisegnaGraficoConKIncrementale import disegnaGrafico
+from Algorithms.HeapSelect import heapSelect
+from Algorithms.QuickSelect import quickSelect
+from Algorithms.QuickP3WSelect import quickSelectRandomized
+from Algorithms.MedianOfMSelect import medianOfMediansSelect
 
 import random
 import time
 import os
-
 
 '''
 tempoMinimoMisurabile:
@@ -19,7 +17,6 @@ def tempoMinimoMisurabile():
         pass
     fineMisurazione = time.monotonic()
     return fineMisurazione - inizioMisurazione
-
 
 '''
 misuraTempi:
@@ -67,7 +64,6 @@ dimArray = 1000
 kArray = list(range(0, 1001, 10))
 
 
-
 def benchmark():
     testPerOgniN = 300
     for i in range(len(kArray)):
@@ -108,6 +104,5 @@ def benchmark():
                 f.write(f"{tempo}\n")
 
 print("Benchmark partito")
-#benchmark()
-print("Benchmark terminato. Creo il grafico.")
-disegnaGrafico()
+benchmark()
+print("Benchmark terminato")

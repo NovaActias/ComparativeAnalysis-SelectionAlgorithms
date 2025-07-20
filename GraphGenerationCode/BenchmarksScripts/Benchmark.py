@@ -1,20 +1,17 @@
-from HeapSelect import heapSelect
-from QuickSelect import quickSelect
-from partition3WayRandomized import quickSelectRandomized
-from MedianOfMediansSelect import medianOfMediansSelect
-from DisegnaGrafico import disegnaGrafico
+from Algorithms.HeapSelect import heapSelect
+from Algorithms.QuickSelect import quickSelect
+from Algorithms.QuickP3WSelect import quickSelectRandomized
+from Algorithms.MedianOfMSelect import medianOfMediansSelect
 
 import random
 import time
 import os
-#################################### ! DISCLAIMER ! ###################################################################
 
+#################################### ! DISCLAIMER ! ###################################################################
 # IL SEGUENTE BENCHMARK NON È STATO PENSATO PER ESSERE ESEGUITO SU WINDOWS. 
 # È STATO TESTATO SU MACOSX E UBUNTU, PERTANTO SCONSIGLIAMO L'ESECUZIONE SU SISTEMI OPERATIVI DIFFERENTI.
 # IN PARTICOLARE I TEMPI DI ESECUZIONE DEL BENCHMARK, SU WINDOWS, POSSONO RISULTARE ESTREMEAMENTE PIÙ ELEVATI. 
 # INOLTRE IL GRAFICO NON VERRÀ GENERATO.
-
-
 
 '''
 tempoMinimoMisurabile:
@@ -95,28 +92,41 @@ def benchmark():
 
 
     # Imposta la directory di lavoro relativa alla posizione di questo file
-    directoryPath = os.path.join(os.path.dirname(__file__), 'RisultatiBenchmark')
+    directoryPath = os.path.join(os.path.dirname(__file__), '..', 'BenchmarkFinalData')
 
     # Verifica se la cartella esiste, altrimenti creala
     if not os.path.exists(directoryPath):
         os.makedirs(directoryPath)
 
     # Costruisci i percorsi dei file relativi a questa directory
-    dimensioniArray_path = os.path.join(directoryPath, 'dimensioniArray.txt')
+    arraySize_path = os.path.join(directoryPath, 'ArraySize.txt')
 
     # Scrive la dimensione di ogni array generato in un file. 
-    with open(dimensioniArray_path, 'w') as f:
+    with open(arraySize_path, 'w') as f:
         for n in dimensioneArrayGenerati:
             f.write(f"{n}\n")
 
-    # Scrive i risultati dei tempi di esecuzione in file di testo separati. Uno per ogni algoritmo. 
+    cartelle_algoritmi = {
+        "QuickSelect": "QuickSelectExecTimes",
+        "QuickSelectRandomizedPTW": "WorstQuickP3WExecTimes", 
+        "HeapSelect": "HeapSelectExecTimes",
+        "MedianOfMediansSelect": "MediansSelectExecTimes"
+    }
+
+    # Scrive i risultati dei tempi di esecuzione in sottocartelle separate
     for i, nome in enumerate(nomi_algoritmiDiSelezione):
-        file_path = os.path.join(directoryPath, f'tempi{nome}.txt')
+        sottocartella = cartelle_algoritmi[nome]
+        sottocartella_path = os.path.join(directoryPath, sottocartella)
+        
+        # Crea la sottocartella se non esiste
+        if not os.path.exists(sottocartella_path):
+            os.makedirs(sottocartella_path)
+        
+        file_path = os.path.join(sottocartella_path, 'kIsRandom.txt')  # Nome file coerente
         with open(file_path, 'w') as f:
             for tempo in tempiMedi[i]:
                 f.write(f"{tempo}\n")
 
 print("Benchmark partito")
 benchmark()
-print("Benchmark terminato. Creo il grafico.")
-disegnaGrafico()
+print("Benchmark terminato")
