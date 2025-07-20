@@ -12,7 +12,6 @@ This repository contains implementation and performance analysis of selection al
 - **Quick Select With Partition 3-Way**: Variant of Quick Select
 
 ## Project Structure
-
 ```
 ├── GraphGenerationCode/
 │   ├── Algorithms/              # Algorithm implementations
@@ -21,7 +20,7 @@ This repository contains implementation and performance analysis of selection al
 │   │   ├── MedianOfMediansSelect.py
 │   │   ├── QuickP3WSelect.py
 │   │   └── Heap.py
-│   ├── BenchmarkFinalData/      # Pre-generated benchmark data
+│   ├── BenchmarkFinalData/      # Benchmark data
 │   │   ├── ArraySize.txt
 │   │   ├── kValues.txt
 │   │   ├── QuickSelectExecTimes/
@@ -60,11 +59,11 @@ To generate all the graphs used in the report:
 cd GraphGenerationCode
 python DrawGraph.py
 ```
-
 This command will generate graphs showing:
 - Individual performance of each algorithm randomly chosen k values (**k Random**)
 - Comparisons with different k values (**k = 1**, **k = len(Array)**, **k = len(Array)//2**)
 - Final comparison with k values in multiples of 10 (0, 10, 20, ..., 1000) (**k = 10x**)
+- Worst cases for QuickSelect and QuickSelect with partition-3-way (**k Random**)
 - Final comparison (**k Random**)
 
 ### Running Benchmarks
