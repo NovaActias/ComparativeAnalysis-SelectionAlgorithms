@@ -199,7 +199,7 @@ def addPlottedGraph(graph: GraphType, kType, ax):
     if kType == 'kIs10x':
         # For k=10x tests, X-axis represents k values (0, 10, 20, ..., 1000)
         xValues = readValues(valuesOfKFilePath)
-        yValues = calculate_k_averages(ExecTimePathFile)  # Use averaged execution times
+        yValues = readValues(ExecTimePathFile)  # Use averaged execution times
     else:
         # For other tests, X-axis represents array sizes
         xValues = readValues(arraySizeFilePath)

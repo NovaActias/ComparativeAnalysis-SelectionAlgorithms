@@ -1,7 +1,7 @@
 from Algorithms.HeapSelect import heapSelect
 from Algorithms.QuickSelect import quickSelect
 from Algorithms.QuickP3WSelect import quickSelectRandomized
-from Algorithms.MedianOfMSelect import medianOfMediansSelect
+from Algorithms.MedianOfMediansSelect import medianOfMediansSelect
 
 import random
 import time
